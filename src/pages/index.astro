@@ -1,0 +1,50 @@
+---
+import Button from "../components/Button.svelte";
+import MainLayout from "../layouts/MainLayout.astro";
+import { Image } from "@astrojs/image/components";
+const description =
+  "I'm an Android Developer " +
+  "who's passionate and pretty ambitious. " +
+  "I'm really into the world of science and " +
+  "technology and enjoy expanding my knowledge in these fields. " +
+  "For the past few years, I've been building my career in mobile app development, " +
+  "specifically on the Android platform.";
+---
+
+<MainLayout title={"Nur Kholid"} ,description={description}>
+  <div
+    class="mx-auto px-4 max-w-screen-xl sm:mt-20 mt-10 flex flex-wrap items-center justify-between"
+  >
+    <div>
+      <h1 class="sm:text-9xl text-5xl font-bold">Hello,</h1>
+      <h2 class="sm:text-9xl text-5xl font-bold">I'm Kholid</h2>
+      <h3 class="sm:text-3xl text-2xl font-light md:mt-5 mt-2">
+        Android Developer
+      </h3>
+    </div>
+
+    <Image
+      src={"/images/front_image.png"}
+      alt="tes"
+      width={500}
+      height={500}
+      format={"avif"}
+      fit={"cover"}
+      class="img border-black border-2 sm:mt-0 mt-5"
+    />
+  </div>
+  <div
+    class="mx-auto max-w-screen-xl sm:px-52 sm:mt-28 px-2 mt-8 flex flex-col items-center"
+  >
+    <blockquote class="font-light sm:text-xl text-center italic">
+      " {description} "
+    </blockquote>
+    <Button client:only="svelte" route={"/aboutme"} />
+  </div>
+</MainLayout>
+
+<style>
+  .img {
+    width: 400px;
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro"
+import {Image} from '@astrojs/image/components'
+---
+
+<MainLayout title={"About me"} description={""}>
+    <div class="mx-auto px-4 max-w-screen-xl">
+        <Image
+        src={"/images/otter_bg.webp"}
+        alt="bg_image"
+        width={1928}
+        height={700}
+        format={"avif"}
+        fit={"cover"}
+        class="w-full"/>
+    </div>
+</MainLayout>
