@@ -1,0 +1,25 @@
+---
+import CardBlog from "../../components/CardBlog.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+export const posts = await Astro.glob("../../contents/blog/*.md");
+---
+
+<MainLayout title={"Blog"} description={""}>
+  <div class="mx-auto px-4 max-w-screen-xl">
+    <p class="text-5xl font-black text-center my-20">Blogs</p>
+    <div
+      class="grid sm:gap-x-2 md:gap-x-4 lg:gap-x-8 sm:gap-y-2 md:gap-y-4 lg:gap-y-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center"
+    >
+      {
+        posts.map(({ frontmatter }) => (
+          <CardBlog
+            title={frontmatter.title}
+            tags={frontmatter.tags}
+            description={frontmatter.description}
+            image={"/images/otter_bg.webp"}
+          />
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

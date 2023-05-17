@@ -1,0 +1,29 @@
+---
+const {image,description,tags,title} = Astro.props
+import { Image } from "@astrojs/image/components";
+---
+
+<div class="text-center max-w-sm rounded overflow-hidden border-black border">
+  <Image
+    class="w-full"
+    alt="bg_blog_image"
+    width={1020}
+    height={259}
+    format={"avif"}
+    fit={"cover"}
+    src={image}
+  />
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">{title}</div>
+    <p class="text-gray-700 text-base">
+      {description}
+    </p>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    {tags.map((tag)=>(
+      <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+      #{tag}
+    </span>
+    ))}
+  </div>
+</div>

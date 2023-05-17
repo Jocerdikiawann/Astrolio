@@ -10,7 +10,7 @@ export default function Header(){
         <div className="flex flex-wrap items-center justify-between">
           <a href="/" className="flex items-center">
             <span className="self-center text-2xl font-semibold whitespace-nowrap">
-              "The"
+              {"{dev}"}
             </span>
           </a>
           <button
