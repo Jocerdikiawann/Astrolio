@@ -16,7 +16,7 @@ jobs:
         container: node:slim
         steps:
             - uses: actions/checkout@v3
-            - uses: elgohr/Publish-Docker-Github-Action@v5
+            - uses: elgohr/Publish-Docker-Github-Action@master
               name: build and publish to github packages registry
               with:
                 name: Jocerdikiawann/Astrolio/astrolio
