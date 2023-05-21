@@ -21,7 +21,7 @@ jobs:
               with:
                 name: Jocerdikiawann/Astrolio/astrolio
                 registry: ghcr.io
-                username: ${{ secrets.GH_USERNAME }}
+                username: ${{ secrets.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
                 dockerfile: Dockerfile
                 tags: v1
