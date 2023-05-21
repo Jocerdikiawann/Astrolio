@@ -1,24 +1,16 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import { Image } from "@astrojs/image/components";
+import { AnimationHover } from "../../components/AnimationHover.jsx";
 
 export const posts = await Astro.glob("../../contents/aboutme/*.md");
 ---
 
 <MainLayout title={"About - Kholid"} description={""}>
-  <div class="mx-auto px-4 max-w-screen-xl">
-    <Image
-      src={"/images/otter_bg.webp"}
-      alt="bg_image"
-      width={1020}
-      height={259}
-      format={"avif"}
-      fit={"cover"}
-      class="w-full py-5"
-    />
+  <div class="mx-auto px-4 max-w-screen-xl sm:mt-20 mt-10">
+    <AnimationHover client:load className={"w-full h-80"} />
     <>
       {
-        posts.map(({Content,frontmatter}, index) => (
+        posts.map(({ Content, frontmatter }, index) => (
           <div
             class={`md:flex my-2 ${
               index == posts.length - 1
@@ -26,15 +18,15 @@ export const posts = await Astro.glob("../../contents/aboutme/*.md");
                 : "divide-y divide-black divide-y-reverse"
             }`}
           >
-            <div class="w-40 mx-20 text-2xl font-black antialiased pt-10">
+            <div class="w-40 lg:mx-20 md:mx-10 sm:mx-2 text-2xl font-black antialiased pt-10">
               {frontmatter.title}
             </div>
             <div
-              class={`flex-1 mx-20 antialiased ${
+              class={`flex-1 lg:mx-20 md:mx-10 sm:mx-2 antialiased ${
                 index == posts.length - 1 ? "pt-10" : "py-10"
               }`}
             >
-            <Content/>
+              <Content />
             </div>
           </div>
         ))

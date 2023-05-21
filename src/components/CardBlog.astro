@@ -1,14 +1,14 @@
 ---
-const {image,description,tags,title} = Astro.props
+const { image, description, tags, title,slug } = Astro.props;
 import { Image } from "@astrojs/image/components";
 ---
 
-<div class="text-center max-w-sm rounded overflow-hidden border-black border">
+<a class="text-center max-w-sm rounded overflow-hidden border-black border" href={`/blog/${slug}`}>
   <Image
-    class="w-full"
+    class="w-full border-b border-black"
     alt="bg_blog_image"
     width={1020}
-    height={259}
+    height={500}
     format={"avif"}
     fit={"cover"}
     src={image}
@@ -20,10 +20,12 @@ import { Image } from "@astrojs/image/components";
     </p>
   </div>
   <div class="px-6 pt-4 pb-2">
-    {tags.map((tag)=>(
-      <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-      #{tag}
-    </span>
-    ))}
+    {
+      tags.map((tag: unknown) => (
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          #{tag}
+        </span>
+      ))
+    }
   </div>
-</div>
+</a>

@@ -1,0 +1,65 @@
+---
+title: "Astro"
+slug: "astro"
+description: "Astro is the all-in-one web framework designed for speed. Pull your content from anywhere and deploy everywhere, all powered by your favorite UI components and libraries."
+tags: ["web","astro","framework"]
+image: "/images/astro.png"
+---
+
+# Astro
+
+&nbsp;&nbsp;&nbsp;&nbsp;Di era sekarang banyak teknologi baru bermunculan, bukan hanya AI namun teknologi pengembangan android hingga web, salah satu framework baru untuk web development ialah **Astro**.
+
+> Astro is the all-in-one web framework designed for speed. Pull your content from anywhere and deploy everywhere, all powered by your favorite UI components and libraries.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Mengutip dari halaman utama [**astro**](https://astro.build) *"Astro adalah kerangka kerja web yang serba guna yang dirancang untuk meningkatkan kecepatan pengembangan. Dengan Astro, Kamu dapat dengan mudah mengambil konten dari berbagai sumber dan mendeploy ke berbagai platform. Astro didukung oleh komponen UI dan pustaka favorit yang memudahkan pengembangan aplikasi web."* dan ya, dengan astro kamu bisa menggunakan berbagai macam framework seperti React, Svelte, Vue, Solid, dan beberapa lainnya di dalam satu folder projek.
+
+## Menggunakan komponent Framework
+
+&nbsp;&nbsp;&nbsp;&nbsp;Cara menggunakan framework lain di dalam astro kamu dapat menggunakannya sebagai komponen atau layout, contoh penggunaannya :
+
+```javascript
+
+---
+import  MyReactComponent  from  '../components/MyReactComponent.jsx';
+---
+<html>
+	<body>
+		<h1>Use React components directly in Astro!</h1>
+		<MyReactComponent  />
+	</body>
+</html>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Secara default, komponen framework kamu akan dirender hanya di server sebagai HTML statis. Hal ini berguna untuk templating komponen yang tidak interaktif dan menghindari mengirimkan JavaScript yang tidak perlu ke klien.
+
+  
+
+## Menghidrasi Komponen Interaktif
+
+&nbsp;&nbsp;&nbsp;&nbsp;Komponen kerangka kerja dapat dijadikan interaktif (terhidrasi) menggunakan direktif client:*. Ini adalah atribut-atribut komponen yang menentukan kapan JavaScript komponen kamu harus dikirimkan ke browser.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dengan semua direktif client kecuali client:only, komponen kamu akan dirender terlebih dahulu di server untuk menghasilkan HTML statis. JavaScript komponen akan dikirimkan ke browser sesuai dengan direktif yang kamu pilih. Kemudian, komponen akan terhidrasi dan menjadi interaktif.
+
+```javascript
+
+---
+// Example: hydrating framework components in the browser.
+import  InteractiveButton  from  '../components/InteractiveButton.jsx';
+import  InteractiveCounter  from  '../components/InteractiveCounter.jsx';
+import  InteractiveModal  from  "../components/InteractiveModal.svelte"
+---
+
+<!--  This  component's JS will begin importing when the page loads -->
+<InteractiveButton  client:load  />
+
+<!--  This  component's JS will not be sent to the client until
+the  user  scrolls  down  and  the  component  is  visible  on  the  page  -->
+
+<InteractiveCounter  client:visible  />
+
+<!--  This  component  won't render on the server, but will render on the client when the page loads -->
+
+<InteractiveModal  client:only="svelte"  />
+```
+&nbsp;&nbsp;&nbsp;&nbsp;Kira-kira seperti itu penjelasan singkat tentang framework astro, selebihnya kamu dapat membaca nya di website utama [**astro**](https://astro.build), Terima kasih.

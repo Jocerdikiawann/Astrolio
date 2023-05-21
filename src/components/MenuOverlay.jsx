@@ -6,8 +6,8 @@ export default function MenuOverlay() {
 
   return (
     <div
-      className={`absolute z-90 ${
-        $isNavbarOpen ? "w-full h-full opacity-95" : "w-0 h-0 opacity-0"
+      className={`absolute ${
+        $isNavbarOpen ? "z-90 w-full h-full opacity-95" : "z-0 opacity-0"
       }  flex justify-center items-center bg-black duration-300`}
     >
       {$isNavbarOpen ? (
@@ -20,14 +20,24 @@ export default function MenuOverlay() {
       ) : (
         <></>
       )}
-      <div className="flex flex-col text-white text-center text-xl font-light space-y-3">
-        <a className="hover:text-amber-500 sm:text-3xl text-2xl duration-300 " href="/aboutme">
-          About Me
-        </a>
-        <a className="hover:text-amber-500 sm:text-3xl text-2xl duration-300" href="/blog">
-          Blog
-        </a>
-      </div>
+      {$isNavbarOpen ? (
+        <div className="flex flex-col text-white text-center text-xl font-light space-y-3">
+          <a
+            className="hover:text-amber-500 sm:text-3xl text-2xl"
+            href="/aboutme"
+          >
+            About Me
+          </a>
+          <a
+            className="hover:text-amber-500 sm:text-3xl text-2xl"
+            href="/blog"
+          >
+            Blog
+          </a>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
