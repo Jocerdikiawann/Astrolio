@@ -3,12 +3,6 @@ name: Build and Deploy
 on: 
     push:
         branches: ["main"]
-    workflow_dispatch:
-        inputs:
-            logLevel:
-                description: "Log level"
-                required: true
-                default: "warning"
 
 jobs:
     build:
@@ -16,30 +10,22 @@ jobs:
         container: node:slim
         steps:
             - uses: actions/checkout@v3
-            - uses: elgohr/Publish-Docker-Github-Action@master
-              name: build and publish to github packages registry
+            - uses: actions/setup-node@v3
+              name: use nodejs
               with:
-                name: Jocerdikiawann/Astrolio/astrolio
-                registry: ghcr.io
-                username: ${{ secrets.GH_USERNAME }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-                dockerfile: Dockerfile
-                tags: v1
+                node-version: "latest"
+                check-latest: true
+            - run: npm i
 
             - uses: appleboy/ssh-action@master
               name: Deploy package to idcloudhost
-              env: 
-                GITHUB_USERNAME: ${{secrets.GH_USERNAME}}
-                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
               with:
                 host: ${{secrets.HOST}}
                 port: ${{secrets.PORT}}
                 username: ${{secrets.USERNAME}}
                 key: ${{secrets.PRIVATE_KEY}}
-                envs: GITHUB_USERNAME, GITHUB_TOKEN
                 script: |
-                    docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-                    docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
-                    docker stop astrolio
-                    docker system prune -f
-                    docker run --name astrolio -dit -p 3000:3000 ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
+                   git pull origin main
+                   git status
+                   npm install
+                   npm run dev
