@@ -1,8 +1,10 @@
-name: Build and Deploy
+name: Demo push
 
 on: 
     push:
         branches: ["main"]
+        tags:
+          - v*
     workflow_dispatch:
         inputs:
             logLevel:
@@ -10,36 +12,54 @@ on:
                 required: true
                 default: "warning"
 
-jobs:
-    build:
-        runs-on: ubuntu-latest
-        container: node:slim
-        steps:
-            - uses: actions/checkout@v3
-            - uses: elgohr/Publish-Docker-Github-Action@v5
-              name: build and publish to github packages registry
-              with:
-                name: Jocerdikiawann/Astrolio/astrolio
-                registry: ghcr.io
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-                dockerfile: Dockerfile
-                tags: v1
+env:
+  IMAGE_NAME: ${{github.repository}}
 
-            - uses: appleboy/ssh-action@master
-              name: Deploy package to idcloudhost
-              env: 
-                GITHUB_USERNAME: ${{github.actor}}
-                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-              with:
-                host: ${{secrets.HOST}}
-                port: ${{secrets.PORT}}
-                username: ${{secrets.USERNAME}}
-                key: ${{secrets.PRIVATE_KEY}}
-                envs: GITHUB_USERNAME, GITHUB_TOKEN
-                script: |
-                    docker login ghcr.io -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-                    docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
-                    docker stop astrolio
-                    docker system prune -f
-                    docker run astrolio -p 3000:3000 ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+        
+      - name: Log in to repository
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{github.repository_owner}}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{github.ref}}" | sed -e 's,.*/\(.*\),\1,')
+          [["${{github.ref}}"=="refs/tags/"*]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          ["$VERSION"=="main"] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:VERSION
+
+      # - uses: appleboy/ssh-action@master
+      #   name: Deploy package to idcloudhost
+      #   env: 
+      #     GITHUB_USERNAME: ${{github.actor}}
+      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      #   with:
+      #     host: ${{secrets.HOST}}
+      #     port: ${{secrets.PORT}}
+      #     username: ${{secrets.USERNAME}}
+      #     key: ${{secrets.PRIVATE_KEY}}
+      #     envs: GITHUB_USERNAME, GITHUB_TOKEN
+      #     script: |
+      #         echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+      #         docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
+              
+      #         docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
+      #         docker stop astrolio
+      #         docker system prune -f
+      #         docker run astrolio -p 3000:3000 ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
