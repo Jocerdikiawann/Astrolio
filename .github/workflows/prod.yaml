@@ -45,22 +45,24 @@ jobs:
           docker push $IMAGE_ID:$VERSION
         
 
-      # - uses: appleboy/ssh-action@master
-      #   name: Deploy package to idcloudhost
-      #   env: 
-      #     GITHUB_USERNAME: ${{github.actor}}
-      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      #   with:
-      #     host: ${{secrets.HOST}}
-      #     port: ${{secrets.PORT}}
-      #     username: ${{secrets.USERNAME}}
-      #     key: ${{secrets.PRIVATE_KEY}}
-      #     envs: GITHUB_USERNAME, GITHUB_TOKEN
-      #     script: |
-      #         echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-      #         docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
-              
-      #         docker pull ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
-      #         docker stop astrolio
-      #         docker system prune -f
-      #         docker run astrolio -p 3000:3000 ghcr.io/Jocerdikiawann/Astrolio/astrolio:v1
+      - uses: appleboy/ssh-action@master
+        name: Deploy package to idcloudhost
+        env: 
+          GITHUB_USERNAME: ${{github.actor}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          host: ${{secrets.HOST}}
+          port: ${{secrets.PORT}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.PRIVATE_KEY}}
+          envs: GITHUB_USERNAME, GITHUB_TOKEN
+          script: |
+              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+              [ "$VERSION" == "main" ] && VERSION=latest
+              echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
+              MY_IMAGE=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME:$VERSION
+              docker pull $MY_IMAGE
+              docker stop $(docker ps -aq)
+              docker system prune -f
+              docker run -p 3000:3000 $MY_IMAGE
