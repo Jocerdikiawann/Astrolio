@@ -69,4 +69,4 @@ jobs:
               docker stop $(docker ps -aq)
               docker system prune
               docker pull $MY_IMAGE
-              docker run -d -r always -p 3000:3000 $MY_IMAGE
+              docker run -d --restart always -p 3000:3000 $MY_IMAGE
