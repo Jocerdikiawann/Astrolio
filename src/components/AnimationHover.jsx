@@ -1,4 +1,4 @@
-import {useRive,Alignment,Fit,Layout} from "@rive-app/react-canvas";
+import { useRive,Alignment,Fit,Layout } from "@rive-app/react-canvas";
 const SOURCE_FILE = "images/cat_rive.riv"
 const STATE_MACHINE_NAME = "State Machine 1"
 

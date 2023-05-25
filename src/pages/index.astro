@@ -1,8 +1,7 @@
 ---
 import { AnimationHover } from "../components/AnimationHover";
-import Button from "../components/Button.svelte";
+import Button from "../components/Button";
 import MainLayout from "../layouts/MainLayout.astro";
-import { Image } from "@astrojs/image/components";
 const description =
   "I'm an Android Developer " +
   "who's passionate and pretty ambitious. " +
@@ -31,7 +30,7 @@ const description =
     <blockquote class="font-light sm:text-xl text-center italic">
       " {description} "
     </blockquote>
-    <Button client:only="svelte" route={"/aboutme"} />
+    <Button client:load route={"/aboutme"} />
   </div>
 </MainLayout>
 
