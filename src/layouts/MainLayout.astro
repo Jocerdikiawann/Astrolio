@@ -1,22 +1,19 @@
 ---
-import "@fontsource/raleway"
-import Header from "../components/Header.jsx"
-import MainHead from "./MainHead.astro"
+import "@fontsource/raleway";
+import Header from "../components/Header.jsx";
+import MainHead from "./MainHead.astro";
 import MenuOverlay from "../components/MenuOverlay.jsx";
 import Footer from "../components/Footer.jsx";
-const {title,description} = Astro.props
+const { title, description } = Astro.props;
 ---
 
 <html lang="en">
-	<MainHead title={title} description={description} />
-	<body>
-		<MenuOverlay client:only="react" />
-		<Header client:only="react" />
-		<slot/>
-		<Footer client:only="react" />
-	</body>
+  <MainHead title={title} description={description} />
+  <body>
+    <MenuOverlay client:only="react" />
+    <Header client:only="react" />
+    <slot />
+    <Footer client:only="react" />
+    <style is:global></style>
+  </body>
 </html>
-
-<style is:global>
-	
-</style>
