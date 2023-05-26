@@ -1,10 +1,9 @@
-name: Demo push
+name: Up to netlify
 
 on: 
     push:
         branches: ["main"]
-        tags:
-          - v*
+
     workflow_dispatch:
         inputs:
             logLevel:
@@ -12,62 +11,28 @@ on:
                 required: true
                 default: "warning"
 
-env:
-  IMAGE_NAME: astrolio
-
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    strategy:
+      matrix:
+        node-version: [14.x,16.x,18.x,20.x]
 
     steps:
-      
       - uses: actions/checkout@v3
-
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-        
-      - name: Log in to repository
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-      
-      - name: Push image
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "main" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-        
-
-      - uses: appleboy/ssh-action@master
-        name: Deploy package to idcloudhost
-        env: 
-          GITHUB_USERNAME: ${{github.actor}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Use node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          host: ${{secrets.HOST}}
-          port: ${{secrets.PORT}}
-          username: ${{secrets.USERNAME}}
-          key: ${{secrets.PRIVATE_KEY}}
-          envs: GITHUB_USERNAME, GITHUB_TOKEN
-          script: |
-              IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-              IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-              VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-              [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-              [ "$VERSION" == "main" ] && VERSION=latest
-              echo IMAGE_ID=$IMAGE_ID
-              echo VERSION=$VERSION
-              echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_USERNAME --password-stdin
-              MY_IMAGE=ghcr.io/jocerdikiawann/astrolio:latest
-              docker stop $(docker ps -aq)
-              docker rm $(docker ps -aq)
-              docker rmi $(docker images -q)
-              docker pull $MY_IMAGE
-              docker run -d --restart always -p 3000:3000 $MY_IMAGE
+          node-version: ${{matrix.node-version}}
+      - run: pnpm install
+      - run: pnpm run build
+      - name: Publish to netlify
+        uses: South-Paw/action-netlify-cli@1.0.1
+        id: netlify
+        with:
+          args: 'deploy --json --dir \"./dist\" --message \"draft [${{ github.sha }}]\"'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      
