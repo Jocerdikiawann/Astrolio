@@ -12,18 +12,15 @@ on:
                 default: "warning"
 
 jobs:
-  build-and-push-image:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x,16.x,18.x,20.x]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use node.js ${{ matrix.node-version }}
+      - name: Use node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: "18.x"
       - run: npm install
       - run: npm run build
       - name: Publish to netlify
