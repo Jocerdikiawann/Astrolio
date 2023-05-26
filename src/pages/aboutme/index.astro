@@ -1,13 +1,12 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import { AnimationHover } from "../../components/AnimationHover.jsx";
-
+import CatAnimation from "../../components/CatAnimation.astro";
 export const posts = await Astro.glob("../../contents/aboutme/*.md");
 ---
 
 <MainLayout title={"About - Kholid"} description={""}>
   <div class="mx-auto px-4 max-w-screen-xl sm:mt-20 mt-10">
-    <AnimationHover client:load className={"w-full h-80"} />
+    <CatAnimation className={"w-full h-80"} />
     <>
       {
         posts.map(({ Content, frontmatter }, index) => (

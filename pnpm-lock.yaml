@@ -16,9 +16,9 @@ dependencies:
   '@nanostores/react':
     specifier: ^0.5.0
     version: 0.5.0(nanostores@0.8.1)(react@18.2.0)
-  '@rive-app/react-canvas':
-    specifier: ^3.0.48
-    version: 3.0.48(react@18.2.0)
+  '@rive-app/canvas':
+    specifier: ^1.1.9
+    version: 1.1.9
   '@tailwindcss/typography':
     specifier: ^0.5.9
     version: 0.5.9(tailwindcss@3.3.2)
@@ -734,17 +734,8 @@ packages:
       escalade: 3.1.1
     dev: false
 
-  /@rive-app/canvas@1.1.7:
-    resolution: {integrity: sha512-zWtbLSAwfJ4OaqjdSPVF/PDgMW1ncA8pnCPkZ7HwxMNQ6VfFlSHvXCToOCMRmudXbepCbTKXlg4C1nv684wXLA==}
-    dev: false
-
-  /@rive-app/react-canvas@3.0.48(react@18.2.0):
-    resolution: {integrity: sha512-L5tzPZ1Rc9lrmE6jBUDZa/EvKiUTWGCmJgQKPWO2iZO27UMjkYAdfvpflm67qWYOLVoQUGJ5e9Vj+i5PXadPVA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@rive-app/canvas': 1.1.7
-      react: 18.2.0
+  /@rive-app/canvas@1.1.9:
+    resolution: {integrity: sha512-PsHDCtte999FToHb6H1+0sU+DYZEDU8Ph6m1qZcIM8d5a9NQtH9ic71rFJvzeI4de5ET/kzj0V/JUaSo16DMrg==}
     dev: false
 
   /@tailwindcss/typography@0.5.9(tailwindcss@3.3.2):

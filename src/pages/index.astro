@@ -1,6 +1,6 @@
 ---
-import { AnimationHover } from "../components/AnimationHover";
-import Button from "../components/Button";
+import Button from "../components/Button.astro";
+import CatAnimation from "../components/CatAnimation.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 const description =
   "I'm an Android Developer " +
@@ -22,7 +22,7 @@ const description =
         Android Developer
       </h3>
     </div>
-    <AnimationHover client:load />
+    <CatAnimation />
   </div>
   <div
     class="mx-auto max-w-screen-xl sm:px-52 sm:mt-28 px-2 mt-8 flex flex-col items-center"
@@ -30,7 +30,7 @@ const description =
     <blockquote class="font-light sm:text-xl text-center italic">
       " {description} "
     </blockquote>
-    <Button client:load route={"/aboutme"} />
+    <Button route={"/aboutme"} />
   </div>
 </MainLayout>
 

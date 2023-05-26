@@ -1,0 +1,31 @@
+---
+const {className="w-80 h-80"} = Astro.props
+---
+
+<div class=`border-black border-2 sm:mt-0 mt-5 ${className} flex justify-center items-center`>
+    <canvas id="catAnimation"/>
+</div>
+
+<script>
+    import {Rive, Layout,Fit, Alignment } from "@rive-app/canvas"
+    const canvasElement = document.getElementById("catAnimation") as HTMLCanvasElement
+    const riv = new Rive({
+        src:"https://cdn.glitch.global/158844ec-0db4-423b-9a3b-023feea33a4d/cat_rive.riv?v=1685086176949",
+        canvas: canvasElement,
+        autoplay: true,
+        stateMachines: ["State Machine 1"],
+        onLoad: ()=>{
+            riv.resizeDrawingSurfaceToCanvas();
+        }
+    })
+
+    riv.layout = new Layout({fit: Fit.FitHeight,alignment: Alignment.Center})
+</script>
+
+<style>
+    #catAnimation {
+        width: 300px;
+        height: 300px;
+    }
+</style>
+
