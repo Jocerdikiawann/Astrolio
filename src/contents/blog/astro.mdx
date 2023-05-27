@@ -2,17 +2,29 @@
 title: "Astro"
 slug: "astro"
 description: "Astro is the all-in-one web framework designed for speed. Pull your content from anywhere and deploy everywhere, all powered by your favorite UI components and libraries."
-tags: ["web","astro","framework"]
+tags: ["web", "astro", "framework"]
 image: "/images/astro.png"
 ---
 
-# Astro
+import { Image } from "@astrojs/image/components";
+
+# {frontmatter.title}
+
+<Image
+  class="w-full h-80 border border-black"
+  alt="bg_blog_image"
+  width="1020"
+  height="500"
+  format="avif"
+  fit="cover"
+  src={frontmatter.image}
+/>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Di era sekarang banyak teknologi baru bermunculan, bukan hanya AI namun teknologi pengembangan android hingga web, salah satu framework baru untuk web development ialah **Astro**.
 
 > Astro is the all-in-one web framework designed for speed. Pull your content from anywhere and deploy everywhere, all powered by your favorite UI components and libraries.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Mengutip dari halaman utama [**astro**](https://astro.build) *"Astro adalah kerangka kerja web yang serba guna yang dirancang untuk meningkatkan kecepatan pengembangan. Dengan Astro, Kamu dapat dengan mudah mengambil konten dari berbagai sumber dan mendeploy ke berbagai platform. Astro didukung oleh komponen UI dan pustaka favorit yang memudahkan pengembangan aplikasi web."* dan ya, dengan astro kamu bisa menggunakan berbagai macam framework seperti React, Svelte, Vue, Solid, dan beberapa lainnya di dalam satu folder projek.
+&nbsp;&nbsp;&nbsp;&nbsp;Mengutip dari halaman utama [**astro**](https://astro.build) _"Astro adalah kerangka kerja web yang serba guna yang dirancang untuk meningkatkan kecepatan pengembangan. Dengan Astro, Kamu dapat dengan mudah mengambil konten dari berbagai sumber dan mendeploy ke berbagai platform. Astro didukung oleh komponen UI dan pustaka favorit yang memudahkan pengembangan aplikasi web."_ dan ya, dengan astro kamu bisa menggunakan berbagai macam framework seperti React, Svelte, Vue, Solid, dan beberapa lainnya di dalam satu folder projek.
 
 ## Menggunakan komponent Framework
 
@@ -33,11 +45,9 @@ import  MyReactComponent  from  '../components/MyReactComponent.jsx';
 
 &nbsp;&nbsp;&nbsp;&nbsp;Secara default, komponen framework kamu akan dirender hanya di server sebagai HTML statis. Hal ini berguna untuk templating komponen yang tidak interaktif dan menghindari mengirimkan JavaScript yang tidak perlu ke klien.
 
-  
-
 ## Menghidrasi Komponen Interaktif
 
-&nbsp;&nbsp;&nbsp;&nbsp;Komponen kerangka kerja dapat dijadikan interaktif (terhidrasi) menggunakan direktif client:*. Ini adalah atribut-atribut komponen yang menentukan kapan JavaScript komponen kamu harus dikirimkan ke browser.
+&nbsp;&nbsp;&nbsp;&nbsp;Komponen kerangka kerja dapat dijadikan interaktif (terhidrasi) menggunakan direktif client:\*. Ini adalah atribut-atribut komponen yang menentukan kapan JavaScript komponen kamu harus dikirimkan ke browser.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Dengan semua direktif client kecuali client:only, komponen kamu akan dirender terlebih dahulu di server untuk menghasilkan HTML statis. JavaScript komponen akan dikirimkan ke browser sesuai dengan direktif yang kamu pilih. Kemudian, komponen akan terhidrasi dan menjadi interaktif.
 
@@ -62,4 +72,5 @@ the  user  scrolls  down  and  the  component  is  visible  on  the  page  -->
 
 <InteractiveModal  client:only="svelte"  />
 ```
+
 &nbsp;&nbsp;&nbsp;&nbsp;Kira-kira seperti itu penjelasan singkat tentang framework astro, selebihnya kamu dapat membaca nya di website utama [**astro**](https://astro.build), Terima kasih.
