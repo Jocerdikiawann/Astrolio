@@ -1,0 +1,28 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<MainLayout
+  title={`Blogs - ${post.data.title}`}
+  description={post.data.description}
+>
+  <article
+    class="antialiased prose lg:prose-xl mx-auto px-4 max-w-screen-xl mt-20"
+  >
+    <Content />
+  </article>
+</MainLayout>
