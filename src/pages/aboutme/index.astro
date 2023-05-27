@@ -1,7 +1,13 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import CatAnimation from "../../components/CatAnimation.astro";
-export const posts = await Astro.glob("../../contents/aboutme/*.md");
+import { getCollection } from "astro:content";
+const lists = await getCollection("aboutme");
+
+const posts = lists.map((post) => ({
+  content: post.render(),
+  data: post.data,
+}));
 ---
 
 <MainLayout title={"About - Kholid"} description={""}>
@@ -9,7 +15,7 @@ export const posts = await Astro.glob("../../contents/aboutme/*.md");
     <CatAnimation className={"w-full h-80"} />
     <>
       {
-        posts.map(({ Content, frontmatter }, index) => (
+        posts.map(({ data, content }, index) => (
           <div
             class={`md:flex my-2 ${
               index == posts.length - 1
@@ -18,14 +24,16 @@ export const posts = await Astro.glob("../../contents/aboutme/*.md");
             }`}
           >
             <div class="w-40 lg:mx-20 md:mx-10 sm:mx-2 text-2xl font-black antialiased pt-10">
-              {frontmatter.title}
+              {data.title}
             </div>
             <div
               class={`flex-1 lg:mx-20 md:mx-10 sm:mx-2 antialiased ${
                 index == posts.length - 1 ? "pt-10" : "py-10"
               }`}
             >
-              <Content />
+              {content.then(({ Content }) => (
+                <Content />
+              ))}
             </div>
           </div>
         ))
