@@ -1,19 +1,29 @@
 ---
-const {
-    title,
-    description,
-    url = Astro.url,
-} = Astro.props
+const { title, description } = Astro.props;
 ---
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description}>
-    <meta name="keywords" content="Nur Kholid, Portofolio, Programmer, Android Developer">
-    <meta name="author" content="Nur Kholid">
-    <title>{title}</title>
-    <link rel="canonical" href={url}>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="description" content={description} />
+  <meta
+    name="keywords"
+    content="Nur Kholid, Portofolio, Programmer, Android Developer"
+  />
+  <meta name="author" content="Nur Kholid" />
+  <title>{title}</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZK8D4BSF0Z"
+  ></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-ZK8D4BSF0Z");
+  </script>
 </head>
