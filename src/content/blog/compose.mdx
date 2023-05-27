@@ -20,8 +20,37 @@ import { Image } from "@astrojs/image/components";
   src={frontmatter.image}
 />
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus molestias officia assumenda optio odit. Ducimus illum, deleniti minus perferendis et eaque corrupti sint quo libero, veritatis inventore veniam, aperiam debitis.
+**_Build better apps faster with Jetpack Compose_** begitulah perkatan dari web developer android, jetpack compose merupakan sebuah modern toolkit untuk membangun native UI, Kalau dulu native android biasanya dibangun dengan imperatif menggunakan XML sekarang untuk membangun native UI jadi lebih mudah dengan pendekatan declarative.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus molestias officia assumenda optio odit. Ducimus illum, deleniti minus perferendis et eaque corrupti sint quo libero, veritatis inventore veniam, aperiam debitis.
+Menurutku semua ini berawal dari perusahaan _facebook_ yang mengenalkan **React Native** membangun android dengan pendekatan declarative, dan juga satu kode bisa dibangun untuk banyak platform seperti ios maupun desktop, lalu muncul **flutter**, dan sekarang **jetpack compose**, React native dan flutter memang bukan native nya android, namun intinya adalah facebook yang memulai menggunakan declarative untuk membangun UI android, CMIIW.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus molestias officia assumenda optio odit. Ducimus illum, deleniti minus perferendis et eaque corrupti sint quo libero, veritatis inventore veniam, aperiam debitis.
+Balik lagi ke topik soal compose, compose sendiri memiliki keuntungan yang lebih dibanding menggunakan XML salah satunya yaitu _kode yang lebih sedikit_, kalau di XML ketika kita ingin membuat sebuah list kita memerlukan adapter, namun di compose kita hanya tinggal melakukan perulangan aja, atau kita bisa menggunakan fungsi bawaan seperti _LazyColumn_, _LazyRow_, penggunaannya sendiri tidak terlalu sulit dan tidak begitu rumit, sekarang coba kita perhatikan contoh kode di jetpack compose :
+
+```kotlin
+	@Composable
+	fun JetpackCompose(){
+		//Component bawaan dari compose
+		Card {
+			var expanded by remember { mutableStateOf(false) }
+			Column(Modifier.clickable { expanded = !expanded }) {
+				Image(painterResource(R.drawable.jetpack_compose))
+				AnimatedVisibility(expanded){
+					Text(
+						text = "Jetpack Compose"
+						style = MaterialTheme.typography.bodyLarge
+					)
+				}
+			}
+		}
+	}
+```
+
+Contoh output dari kode diatas itu seperti ini kira-kira :
+
+![output_kode](https://developer.android.com/static/images/jetpack/compose/landing-preview-animation.gif?hl=id)
+
+**Banyak keuntungan untuk menggunakan compose, tapi tetap tergantung kasusnya**. terkadang ada library atau SDK yang belum support jetpack compose, beberapa hari lalu saya sendiri diberikan tugas untuk membuat feature video call, sebelumnya menggunakan SDK jitsi yang dimana itu sudah include dengan UI nya, lalu aku memilih agora dengan alasan tertentu, SDK agora sendiri belum begitu support untuk jetpack compose, sebenernya sih bisa namun agak struggle aja untuk membangunnya, jadi tetap tergantung case nya.
+
+Beberapa perusahaan sendiri sedikit demi sedikit mulai merefactor atau migrasi ke jetpack compose, salah satunya adalah **twitter** dan **airbnb**, google sendiri merekomendasikan untuk mulai membangun aplikasi dengan jetpack compose, jadi untuk yang baru mau memulai belajar membuat aplikasi android coba dimulai dengan jetpack compose ini.
+
+Cukup sampai disini jika penasaran kalian bisa kunjungi web [developer.android](https://developer.android.com/jetpack/compose?gclid=CjwKCAjw1MajBhAcEiwAagW9MQlFc7Owinfuh8wkxKTHgXsR-BiRfNsgc7KptNUgkafsdOQ8nryQ5xoC92sQAvD_BwE&gclsrc=aw.ds) untuk mencari tau lebih dalam tentang jetpack compose, selamat belajar. Terima kasih 🙌🏻.
