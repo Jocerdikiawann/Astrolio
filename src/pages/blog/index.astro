@@ -1,7 +1,7 @@
 ---
 import CardBlog from "../../components/CardBlog.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
-export const posts = await Astro.glob("../../contents/blog/*.md");
+export const posts = await Astro.glob("../../contents/blog/*.mdx");
 ---
 
 <MainLayout title={"Blog"} description={""}>
