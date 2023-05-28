@@ -4,7 +4,6 @@ import image from "@astrojs/image";
 import react from "@astrojs/react";
 
 import mdx from "@astrojs/mdx";
-import { netlifyEdgeFunctions } from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +15,4 @@ export default defineConfig({
     react(),
     mdx(),
   ],
-  output: 'server',
-  adapter: netlifyEdgeFunctions(),
 });
