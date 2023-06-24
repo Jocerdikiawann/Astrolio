@@ -19,6 +19,7 @@ export default function Header() {
             type="button"
             className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100"
             aria-expanded="false"
+            aria-name="Aria Menu"
             onClick={() => isNavbarOpen.set(!$isNavbarOpen)}
           >
             <svg
