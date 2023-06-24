@@ -16,6 +16,11 @@ export default defineConfig({
     }),
     react(),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) =>
+        page == "https://nurkholid.my.id/" &&
+        page == "https://nurkholid.my.id/aboutme" &&
+        page == "https://nurkholid.my.id/blog",
+    }),
   ],
 });
