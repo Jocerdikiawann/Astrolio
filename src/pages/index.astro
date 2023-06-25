@@ -2,7 +2,7 @@
 import Button from "../components/Button.astro";
 import CatAnimation from "../components/CatAnimation.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-const description =
+let description =
   "I'm an Android Developer " +
   "who's passionate and pretty ambitious. " +
   "I'm really into the world of science and " +
@@ -11,7 +11,7 @@ const description =
   "specifically on the Android platform.";
 ---
 
-<MainLayout title={"Nur Kholid - Portofolio"} ,description={description}>
+<MainLayout title={"Nur Kholid - Portofolio"} description={description}>
   <div
     class="mx-auto px-4 max-w-screen-xl sm:mt-20 mt-10 flex flex-wrap items-center justify-between"
   >
